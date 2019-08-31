@@ -44,13 +44,16 @@ set_property(
 # Dependencies
 
 # CrossWindow
+message(STATUS "Installing crosswindow via submodule")
 add_subdirectory(external/crosswindow)
 set_property(TARGET CrossWindow PROPERTY FOLDER "Dependencies")
 
 # CrossWindow-Graphics
+message(STATUS "Installing crosswindow-graphics via submodule")
 add_subdirectory(external/crosswindow-graphics)
 
 # Cross Graphics Dependencies
+message(STATUS "Installing glad via submodule")
 add_subdirectory(external/glad)
 target_include_directories(
     Glad
@@ -58,6 +61,12 @@ target_include_directories(
 )
 set(XGFX_LIBRARY Glad)
 set_property(TARGET Glad PROPERTY FOLDER "Dependencies")
+
+# GLM
+message(STATUS "Installing glm via submodule")
+set(BUILD_STATIC_LIBS ON)
+add_subdirectory(external/glm/glm)
+set_property(TARGET glm_static PROPERTY FOLDER "Dependencies")
 
 # =============================================================
 
@@ -95,11 +104,20 @@ target_link_libraries(
     ${XGFX_LIBRARY}
     CrossWindowGraphics
     CrossWindow
+    glm_static
 )
 
 target_include_directories(
   ${PROJECT_NAME}
-  PUBLIC "../../external/vectormath"
+  PUBLIC external/glm
+)
+
+add_dependencies(
+    ${PROJECT_NAME}
+    CrossWindowGraphics
+    CrossWindow
+    glm_static
+    
 )
 
 target_compile_definitions(
