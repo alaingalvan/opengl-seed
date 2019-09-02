@@ -10,12 +10,12 @@
 
  // 📈 Triangle Buffer Data
 float positions[3 * 3] = { 1.0f,  -1.0f,  0.0f,
-								 -1.0f,  -1.0f,  0.0f,
-								  0.0f, 1.0f,  0.0f };
+						  -1.0f,  -1.0f,  0.0f,
+						   0.0f, 1.0f,  0.0f };
 
 float colors[3 * 3] = { 1.0f,  0.0f,  0.0f,
-							   0.0f,  1.0f,  0.0f,
-							   0.0f,  0.0f,  1.0f };
+					    0.0f,  1.0f,  0.0f,
+					    0.0f,  0.0f,  1.0f };
 
 GLuint indexBufferData[3] = { 0, 1, 2 };
 
