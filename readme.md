@@ -1,9 +1,13 @@
+![Cover Art](https://alain.xyz/blog/raw-opengl/assets/cover.jpg)
+
 # ⚪ OpenGL Seed
 
 [![CMake][cmake-img]][cmake-url]
 [![License][license-img]][license-url]
 
 A starter repo that you could use to build an OpenGL application on top of.
+
+Check out the this [blog post](https://alain.xyz/blog/raw-opengl) for more details about this example.
 
 ## Setup
 
@@ -47,20 +51,24 @@ cmake --build .
 ### File Structure
 
 ```bash
-├─ external/              # Dependencies
-│  ├─ crosswindow/
-│  ├─ crosswindow-graphics/
-│  ├─ glad/
-│  └─ glm/
-├─ src/                   # Source Files
-│  └─ Main.cpp
-├─ .gitignore
-├─ CMakeLists.txt         # Build Script
-├─ license.md
-└─ readme.md
+├─ 📂 external/                    # 👶 Dependencies
+│  ├─ 📁 crosswindow/                    # 🖼️ OS Windows
+│  ├─ 📁 crosswindow-graphics/           # 🎨 GL Context Creation
+│  ├─ 📁 glm/                            # ➕ Linear Algebra
+│  ├─ 📁 opengl-registry/                # 📚 GL Headers
+│  └─ 📁 glad/                           # 🙌 GL Extension Loader
+├─ 📂 src/                         # 🌟 Source Files
+│  ├─ 📄 Utils.h                         # ⚙️ Utilities (Load Files, Check Shaders, etc.)
+│  ├─ 📄 Triangle.h                      # 🔺 Triangle Draw Code
+│  ├─ 📄 Triangle.cpp                    # -
+│  └─ 📄 Main.cpp                        # 🏁 Application Main
+├─ 📄 .gitignore                   # 👁️ Ignore certain files in git repo
+├─ 📄 CMakeLists.txt               # 🔨 Build Script
+├─ 📄 license.md                   # ⚖️ Your License (Unlicense)
+└─ 📃readme.md                     # 📖 Read Me!
 ```
 
-[cmake-img]: https://img.shields.io/badge/cmake-3.10-1f9948.svg?style=flat-square
+[cmake-img]: https://img.shields.io/badge/cmake-3.6-1f9948.svg?style=flat-square
 [cmake-url]: https://cmake.org/
 [license-img]: http://img.shields.io/:license-unlicense-blue.svg?style=flat-square
 [license-url]: http://unlicense.org/
