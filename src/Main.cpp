@@ -1,28 +1,46 @@
-#include "CrossWindow/Main/Main.h"
+/**
+ * Raw OpenGL - Hello Triangle Example
+ * Author: Alain Galvan (hi@alain.xyz)
+ *
+ * Note: to run this you'll need to follow the instructions in the "Setup" section
+ * of https://alain.xyz/blog/raw-opengl
+ */
+
 #include "CrossWindow/CrossWindow.h"
 #include "glad/glad.h"
 #include "CrossWindow/Graphics.h"
-#include "glm/glm.hpp"
 
+#include <iostream>
+
+#include "Triangle.h"
 
 void xmain(int argc, const char** argv)
 {
-	// Configure our Window
+	// 🖼 Create Window
 	xwin::WindowDesc wdesc;
 	wdesc.title = "OpenGL Seed";
 	wdesc.name = "MainWindow";
 	wdesc.visible = true;
-	wdesc.width = 1280;
-	wdesc.height = 720;
+	wdesc.width = 640;
+	wdesc.height = 640;
 	wdesc.fullscreen = false;
 
 	xwin::Window window;
 	xwin::EventQueue eventQueue;
 
 	if (!window.create(wdesc, eventQueue))
-	{
-		return;
-	};
+	{ return; };
+
+	// ⚪ Load OpenGL
+	xgfx::OpenGLDesc desc;
+	xgfx::OpenGLState oglState = xgfx::createContext(&window, desc);
+	xgfx::setContext(oglState);
+	if (!loadOpenGL())
+	{ return; }
+
+	// 🌟 Create Triangle
+	if (!createTriangle())
+	{ return; }
 
 	// 🏁 Engine loop
 	bool isRunning = true;
@@ -39,6 +57,7 @@ void xmain(int argc, const char** argv)
 			//Update Events
 			const xwin::Event& event = eventQueue.front();
 
+			// ❌ On Close:
 			if (event.type == xwin::EventType::Close)
 			{
 				window.close();
@@ -48,5 +67,17 @@ void xmain(int argc, const char** argv)
 
 			eventQueue.pop();
 		}
+
+		// ✨ Update Visuals
+		if (shouldRender)
+		{
+			// 🔁 Swap back buffers so we can write to the next frame buffer
+			xgfx::swapBuffers(oglState);
+			drawTriangle(wdesc.width, wdesc.height);
+		}
 	}
+
+	// ❌ Destroy OpenGL Data Structures
+	destroyTriangle();
+	xgfx::destroyContext(oglState);
 }
