@@ -70,10 +70,17 @@ set_property(TARGET glm_static PROPERTY FOLDER "Dependencies")
 
 # =============================================================
 
+# Cross Graphics Dependencies
+
+find_library(XGFX_OS_LIBRARY OpenGL)
+
+# =============================================================
+
 # Sources
 
 file(GLOB_RECURSE FILE_SOURCES RELATIVE
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.mm
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
 )
@@ -106,6 +113,14 @@ target_link_libraries(
     CrossWindow
     glm_static
 )
+
+if(XGFX_OS_LIBRARY)
+    message(STATUS "Installing OpenGL library")
+    target_link_libraries(
+        ${PROJECT_NAME}
+        ${XGFX_OS_LIBRARY}
+    )
+endif()
 
 target_include_directories(
   ${PROJECT_NAME}

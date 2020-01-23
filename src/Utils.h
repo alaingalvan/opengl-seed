@@ -64,7 +64,7 @@ inline bool checkShaderCompilation(GLuint shader)
 		glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog);
 		glDeleteShader(shader);
 		std::cout << errorLog;
-		delete errorLog;
+		delete[] errorLog;
 		return false;
 	}
 	return true;
