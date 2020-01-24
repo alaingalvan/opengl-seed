@@ -5,6 +5,8 @@
 [![CMake][cmake-img]][cmake-url]
 [![License][license-img]][license-url]
 
+- [💬 Blog Post](https://alain.xyz/blog/raw-opengl)
+
 A starter repo that you could use to build an OpenGL application on top of.
 
 Check out the this [blog post](https://alain.xyz/blog/raw-opengl) for more details about this example.
@@ -47,6 +49,28 @@ cmake ..
 # 🔨 Build on any platform:
 cmake --build .
 ```
+
+### WebAssembly
+
+**Note**: if you're on Windows, I would highly recommend using the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-the-windows-subsystem-for-linux).
+
+First, install the latest version of Emscripten via the [Emscripten SDK](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html). Make sure to add it's Emscripten installation to your `PATH`, then:
+
+```bash
+# ⚠️ Possible dependencies you might need:
+sudo apt-get update
+sudo apt-get install cmake build-essential llvm
+
+# 👷 Make a build folder
+mkdir wasm
+cd wasm
+
+# 🔨 Build the project
+emcmake cmake ..
+emmake make OpenGLSeed -j
+```
+
+From there create an HTML file that loads the generated `OpenGLSeed.js` file, and run an http server. You can find an example of this [here](https://github.com/alaingalvan/opengl-seed-wasm).
 
 ### File Structure
 

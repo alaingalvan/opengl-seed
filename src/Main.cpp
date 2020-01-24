@@ -5,9 +5,12 @@
  * Note: to run this you'll need to follow the instructions in the "Setup" section
  * of https://alain.xyz/blog/raw-opengl
  */
+#define GL_SILENCE_DEPRECATION
 
 #include "CrossWindow/CrossWindow.h"
+#ifndef __EMSCRIPTEN__
 #include "glad/glad.h"
+#endif
 #include "CrossWindow/Graphics.h"
 
 #include <iostream>

@@ -314,6 +314,7 @@ __pycache__/
 ## Build generated
 build/
 DerivedData/
+wasm/
 
 ## Various settings
 *.pbxuser

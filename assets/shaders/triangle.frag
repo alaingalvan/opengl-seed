@@ -1,4 +1,5 @@
-#version 310 es
+#version 410
+
 precision mediump float;
 precision highp int;
 

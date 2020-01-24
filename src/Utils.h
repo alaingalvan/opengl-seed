@@ -79,6 +79,14 @@ inline bool checkProgramCompilation(GLuint program)
 	if (result != GL_TRUE)
 	{
 		std::cout << "Program failed to link.";
+		GLint maxLength = 0;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// The maxLength includes the NULL character
+		char* errorLog = new char[maxLength]();
+		glGetProgramInfoLog(program, maxLength, &maxLength, errorLog);
+		std::cout << errorLog;
+		delete[] errorLog;
 		return false;
 	}
 

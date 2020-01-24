@@ -36,26 +36,32 @@ GLuint vao = 0;
 
 bool loadOpenGL()
 {
+	#if !defined(XWIN_WASM)
 	if (!gladLoadGL())
 	{
 		std::cout << "Failed to load OpenGL.";
 		return false;
 	}
+	#endif
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR)
 	{
 		std::cout << "OpenGL started with error code: " << err;
 		return false;
 	}
+	
+    int majorVersion, minorVersion;
+    glGetIntegerv(GL_MAJOR_VERSION, &majorVersion);
+    glGetIntegerv(GL_MINOR_VERSION, &minorVersion);
+    std::cout << "OpenGL Version: " << majorVersion << "." << minorVersion
+              << std::endl;
 
 	// Most OpenGL Apps will want to enable these settings:
 
 	// 🖍️ Set default clear color to gray ⚫
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	// 🔺 Enable depth testing
 	glEnable(GL_DEPTH_TEST);
-	// 🧊 Enable seamless cubemap sampling
-	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	// <= Set Depth Test Function
 	glDepthFunc(GL_LEQUAL);
 
