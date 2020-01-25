@@ -1,12 +1,49 @@
 #include "Triangle.h"
 #include "Utils.h"
 
+#ifndef __EMSCRIPTEN__
 #include "glad/glad.h"
+#endif
 
+#define EMBED_SHADERS 1
 
 /**************************************************************
  * 🌎 Globals
  **************************************************************/
+
+// 🧚🏻 Shader Strings
+
+const char* vertShader = R"(
+#version 410
+
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec3 inColor;
+
+layout(location = 0) out vec3 vColor;
+
+void main()
+{
+    vColor = inColor;
+    gl_Position = vec4(inPosition, 1.0);
+}
+)";
+
+const char* fragShader = R"(
+#version 410
+
+precision mediump float;
+precision highp int;
+
+layout(location = 0) in highp vec3 vColor;
+
+layout(location = 0) out highp vec4 outFragColor;
+
+
+void main()
+{
+    outFragColor = vec4(vColor, 1.0);
+}
+)";
 
  // 📈 Triangle Buffer Data
 float positions[3 * 3] = { 1.0f,  -1.0f,  0.0f,
@@ -94,11 +131,15 @@ bool createTriangle()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3, indexBufferData, GL_STATIC_DRAW);
 
 	// 📂 Load Vertex Shader String
+#ifndef EMBED_SHADERS
 	std::string vsPath = getAppDirectory() + "assets/shaders/triangle.vert";
 	std::vector<char> vertShaderCode = readFile(vsPath);
 	const char* vertString = vertShaderCode.data();
 	int vertStringSize = static_cast<int>(vertShaderCode.size());
-
+#else
+	const char* vertString = vertShader;
+	int vertStringSize = strlen(vertShader);
+#endif
 	// ⚪ Create Shader Data Structure
 	vs = glCreateShader(GL_VERTEX_SHADER);
 	// 📰 Pass Vertex Shader String
@@ -108,11 +149,15 @@ bool createTriangle()
 	if (!checkShaderCompilation(vs)) return false;
 
 	// 📂 Load Fragment Shader String
+#ifndef EMBED_SHADERS
 	std::string fsPath = getAppDirectory() + "assets/shaders/triangle.frag";
 	std::vector<char> fragShaderCode = readFile(fsPath);
 	const char* fragString = fragShaderCode.data();
 	int fragStringSize = static_cast<int>(fragShaderCode.size());
-
+#else
+	const char* fragString = fragShader;
+	int fragStringSize = strlen(fragShader);
+#endif
 	// ⚪ Create Shader Data Structure
 	fs = glCreateShader(GL_FRAGMENT_SHADER);
 	// 📰 Pass Fragment Shader String
